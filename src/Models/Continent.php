@@ -20,6 +20,13 @@ class Continent extends Model
     public $translatable = ['name', 'alias', 'abbr', 'full_name'];
 
     /**
+     * 表明模型是否应该被打上时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param  array  $attributes
@@ -42,5 +49,12 @@ class Continent extends Model
         return $this->hasMany(Country::class, 'continent_id');
     }
 
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, $this->translatable) && !is_array($value)) {
+            return $this->setTranslation($key, app()->getLocale(), $value);
+        }
 
+        return parent::setAttribute($key, $value);
+    }
 }

@@ -12,8 +12,8 @@ class WorldsTablesSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(WorldsContinentsTableSeeder::class);
-        // $this->call(WorldsCountriesTableSeeder::class);
+        // $this->call(WorldsContinentsTableSeeder::class);
+        $this->call(WorldsCountriesTableSeeder::class);
         // $this->call(WorldsStatesTableSeeder::class);
         // $this->call(WorldsCitiesTableSeeder::class);
     }

@@ -43,6 +43,13 @@ class Country extends Model
     }
 
     /**
+     * 表明模型是否应该被打上时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * return cities
      * we can not use hasManyThrough here cuz some of countries do not have states.
      *
@@ -61,5 +68,14 @@ class Country extends Model
     public function continent()
     {
         return $this->belongsTo(Continent::class, 'continent_id');
+    }
+
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, $this->translatable) && !is_array($value)) {
+            return $this->setTranslation($key, app()->getLocale(), $value);
+        }
+
+        return parent::setAttribute($key, $value);
     }
 }

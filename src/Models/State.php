@@ -20,6 +20,13 @@ class State extends Model
     public $translatable = ['name', 'alias', 'abbr', 'full_name'];
 
     /**
+     * 表明模型是否应该被打上时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param  array  $attributes
@@ -50,5 +57,14 @@ class State extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, $this->translatable) && !is_array($value)) {
+            return $this->setTranslation($key, app()->getLocale(), $value);
+        }
+
+        return parent::setAttribute($key, $value);
     }
 }

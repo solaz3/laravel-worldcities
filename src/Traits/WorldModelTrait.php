@@ -8,7 +8,7 @@ trait WorldModelTrait
     {
         $locale = $locale ?? app()->getLocale();
 
-        if (in_array($key, $this->translatable) && !is_array($value)) {
+        if (in_array($key, (new static)->translatable) && !is_array($value)) {
             return static::query()
                 ->where("{$key}->{$locale}", $value)
                 ->first();
@@ -20,14 +20,5 @@ trait WorldModelTrait
     public static function findFromCode(string $code)
     {
         return static::findFromString('code', $code);
-    }
-
-    public function setAttribute($key, $value)
-    {
-        if (in_array($key, $this->translatable) && !is_array($value)) {
-            return $this->setTranslation($key, app()->getLocale(), $value);
-        }
-
-        return parent::setAttribute($key, $value);
     }
 }
