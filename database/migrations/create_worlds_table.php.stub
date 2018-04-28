@@ -1,0 +1,67 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateWorldsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create(config('worldcities.table.continent'), function (Blueprint $table) {
+            $table->increments('id');
+            $table->json('name');
+            $table->char('code', 2)->unique();
+            $table->json('alias')->nullable();
+            $table->json('abbr')->nullable();
+            $table->json('full_name')->nullable();
+        });
+
+        Schema::create(config('worldcities.table.country'), function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('continent_id')->comment('Continent ID');
+            $table->json('name');
+            $table->json('alias')->nullable();
+            $table->json('abbr')->nullable();
+            $table->json('full_name')->nullable();
+            $table->json('capital')->nullable();
+            $table->char('code', 4)->unique()->comment('ISO3166-1-Alpha-2');
+            $table->char('code_alpha3', 6)->unique()->comment('ISO3166-1-Alpha-3');
+            $table->string('emoji', 16)->nullable()->comment('Country Emoji');
+            $table->boolean('has_state')->default(false)->index();
+            $table->char('currency', 3)->nullable()->comment('iso_4217_code');
+            $table->json('currency_name')->nullable()->comment('iso_4217_name');
+            $table->string('tld', 8)->nullable()->comment('Top level domain');
+            $table->string('callingcode', 8)->nullable()->comment('Calling prefix');
+        });
+
+        Schema::create(config('worldcities.table.state'), function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('country_id');
+            $table->json('name');
+            $table->json('alias')->nullable();
+            $table->json('abbr')->nullable();
+            $table->json('full_name')->nullable();
+            $table->char('code', 10)->nullable()->index();
+            $table->boolean('has_city')->default(false);
+        });
+
+        Schema::create(config('worldcities.table.city'), function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('country_id')->index();
+            $table->unsignedInteger('state_id')->nullable()->index();
+            $table->json('name');
+            $table->json('alias')->nullable();
+            $table->json('abbr')->nullable();
+            $table->json('full_name')->nullable();
+            $table->char('code', 10)->nullable()->index();
+        });
+    }
+
+    public function down()
+    {
+        Schema::drop(config('worldcities.table.city'));
+        Schema::drop(config('worldcities.table.state'));
+        Schema::drop(config('worldcities.table.country'));
+        Schema::drop(config('worldcities.table.continent'));
+    }
+}
