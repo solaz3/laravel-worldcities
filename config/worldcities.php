@@ -12,6 +12,6 @@ return [
 
         'state' => 'worlds_states',
 
-        'city' => 'worlds_cites',
+        'city' => 'worlds_cities',
     ],
 ];

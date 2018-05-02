@@ -20,6 +20,21 @@ class State extends Model
     public $translatable = ['name', 'alias', 'abbr', 'full_name'];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'alias',
+        'abbr',
+        'full_name',
+        'code',
+        'country_id',
+        'has_city',
+    ];
+
+    /**
      * 表明模型是否应该被打上时间戳
      *
      * @var bool

@@ -23,12 +23,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Coldcoder\\WorldCity\\": "src"
+      "Coldcoder\\WorldCity\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Coldcoder\\WorldCity\\Test\\": "tests"
+      "Coldcoder\\WorldCity\\Test\\": "tests/"
     }
   },
   "scripts": {

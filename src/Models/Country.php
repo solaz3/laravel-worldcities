@@ -20,6 +20,35 @@ class Country extends Model
     public $translatable = ['name', 'alias', 'abbr', 'full_name', 'capital', 'currency_name'];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'alias',
+        'abbr',
+        'full_name',
+        'code',
+        'continent_id',
+        'capital',
+        'code_alpha3',
+        'emoji',
+        'has_state',
+        'currency',
+        'currency_name',
+        'tld',
+        'callingcode',
+    ];
+
+    /**
+     * 表明模型是否应该被打上时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param  array  $attributes
@@ -31,7 +60,7 @@ class Country extends Model
 
         $this->setTable(config('worldcities.table.country'));
     }
-
+    
     /**
      * return States
      *
@@ -41,13 +70,6 @@ class Country extends Model
     {
         return $this->hasMany(State::class, 'country_id');
     }
-
-    /**
-     * 表明模型是否应该被打上时间戳
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * return cities
