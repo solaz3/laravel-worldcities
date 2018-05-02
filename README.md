@@ -68,7 +68,7 @@ Here are some code examples:
 ```php
 use Coldcoder\WorldCity\Models\Country;
 
-// create a model with some tags
+// get a country by code
 $usa = Country::findFromCode('us');
 $usa->states;  // return states
 $usa->cities;  // return cities
